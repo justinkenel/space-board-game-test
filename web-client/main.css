@@ -1,0 +1,112 @@
+div.top-level {
+  display: flex;
+}
+
+div.top-level > div {
+  margin-left: 10px;
+}
+
+div.card {
+  width: 150px;
+  height: 200px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+}
+
+div.card-title {
+  margin-top: 5px;
+  text-align: center;
+  border-bottom: 1px solid gray;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.card:hover {
+  border-color: blue;
+  border-width: 2px;
+  /*margin-left: -1px;
+  margin-top: -1px;*/
+  width: 148px;
+  height: 198px;
+}
+
+div.card:hover div.card-title {
+  margin-top: 4px;
+}
+
+div.deck-and-discard {
+  display: flex;
+}
+
+div.deck {
+  width: 150px;
+  height: 200px;
+}
+
+div.deck-card {
+  width: 150px;
+  height: 200px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+}
+
+div.deck-card:hover {
+  border-color: green;
+  border-width: 2px;
+  margin-left: -1px;
+  margin-top: -1px;
+}
+
+div.discard.deck {
+  margin-left: 10px;
+}
+
+div.deck-title {
+  text-align: center;
+  margin-top: 5px;
+}
+
+div.discard-no-card {
+  width: 150px;
+  height: 150px; /* offset by the padding-top */
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: gray;
+  border-style: dashed;
+  text-align: center;
+  padding-top: 50px;
+}
+
+
+div.card-area-title {
+  transform: rotate(-90deg);
+  transform-origin: left top 0;
+  height: 18px;
+  margin-left: 0px;
+  margin-top: 195px;
+  width: 200px;
+  text-align: center;
+  margin-right: -185px;
+}
+
+div.card-area {
+  display: flex;
+  min-width: 170px;
+  height: 230px;
+  overflow-x: scroll;
+  border-radius: 5px;
+  border-style: dashed;
+  border-color: gray;
+  border-width: 1px;
+  margin-top: 40px;
+}
+
+div.card-area div.card {
+  margin-top: 5px;
+  margin-left: 5px;
+}

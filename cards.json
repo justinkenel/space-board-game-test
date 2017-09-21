@@ -1,0 +1,27 @@
+{
+  "player-factions": [
+    {
+      "title": "House Hel'Naseth"
+    },
+    {
+      "title": "House Argunas"
+    },
+    {
+      "title": "The Telvork Assembly"
+    },
+    {
+      "title": "House Ulrik of the Holy Sigil"
+    }
+  ],
+  "planets": [
+    {
+      "title": "Algoran Prime"
+    },
+    {
+      "title": "Tachikun III"
+    },
+    {
+      "title": "Wren's Haven"
+    }
+  ]
+}
