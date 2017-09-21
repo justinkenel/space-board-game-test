@@ -19,31 +19,37 @@ function gameConnect(setup, delegate) {
 };
 
 function reducer(state, action) {
-  if(!state) return {};
-
+  state=state || {loading: true};
   if(action.type == 'UPDATE_GAME_STATE') {
-    return action.newState;
+    console.log('Updating game state');
+    return Object.assign({}, state, {game: action.newState, loading:false});
+  } else if(action.type == 'SET_WEBSOCKET') {
+    return Object.assign({}, state, {
+      webSocket: action.webSocket,
+      sendMessage: (message) => {
+        action.webSocket.send(JSON.stringify(message));
+      }
+    });
   }
-
   console.log('Invalid Update', action);
   return state;
 };
 
 const CardArea = gameConnect((state, dispatch, props) => {
  return {
-   cards: state.cardAreas[props.id].cards,
-   handleDeck: deck_id => dispatch({
+   cards: state.game.cardAreas[props.id].cards,
+   handleDeck: deck_id => state.sendMessage({
      type: 'DECK_TO_CARD_AREA',
      deck_id: deck_id,
      area_id: props.id
    }),
-   handleCardArea: (from_area_id, card_id) => dispatch({
+   handleCardArea: (from_area_id, card_id) => state.sendMessage({
      type: 'CARD_AREA_TO_CARD_AREA',
      from_area_id: from_area_id,
      to_area_id: props.id,
      card_id: card_id
    }),
-   title: state.cardAreas[props.id].title
+   title: state.game.cardAreas[props.id].title
  };
 }, class extends React.Component {
   render() {
@@ -87,18 +93,18 @@ class Card extends React.Component {
 const Deck = gameConnect((state, dispatch, props) => {
   console.log(state);
   return {
-    cards: state.decks[props.id].cards,
-    discard: state.decks[props.id].discard,
+    cards: state.game.decks[props.id].cards,
+    discard: state.game.decks[props.id].discard,
     deck: {
-      title: state.decks[props.id].title
+      title: state.game.decks[props.id].title
     },
-    handleCardArea: (area_id, card_id) => dispatch({
+    handleCardArea: (area_id, card_id) => state.sendMessage({
       type: 'CARD_AREA_TO_DISCARD',
       area_id: area_id,
       card_id: card_id,
       deck_id: props.id
     }),
-    moveDiscardToDeck: () => dispatch({
+    moveDiscardToDeck: () => state.sendMessage({
       type: 'DISCARD_TO_DECK',
       deck_id: props.id
     })
@@ -147,10 +153,68 @@ const Deck = gameConnect((state, dispatch, props) => {
   }
 });
 
+function getGameState() {
+  return dispatch => {
+    console.log('getting game state')
+    const request = new XMLHttpRequest();
+    request.open("GET", '/state', true);
+    request.onload = e => {
+      console.log('loaded')
+      dispatch({
+        type: 'UPDATE_GAME_STATE',
+        newState: JSON.parse(request.responseText)
+      });
+    };
+    request.onerror = e => {
+      alert(e);
+    };
+    request.send();
+  };
+}
+
 const BoardGameTest = gameConnect((state, dispatch, props) => {
-  return {};
+  console.log(JSON.stringify(state));
+  return {
+    loading: state.loading || !state.webSocket || !state.game,
+    setWebsocket: webSocket => {
+      dispatch({
+        type: 'SET_WEBSOCKET',
+        webSocket: webSocket
+      });
+    },
+    getGameState: () => dispatch(getGameState())
+  };
 }, class extends React.Component {
+  constructor(props) {
+    super(props);
+    const wsprotocol = location.protocol == 'https:' ? "wss" : "ws";
+    const host = location.host;
+    let webSocket;
+    const setupWebsocket = () => {
+      webSocket = new WebSocket( wsprotocol + '://' + host + "/communication");
+      console.log(webSocket);
+
+      webSocket.onopen = () => this.props.setWebsocket(webSocket);
+
+      webSocket.onmessage = (event) => {
+        console.log('Got a message');
+        this.props.getGameState();
+      };
+
+      webSocket.onclose = (event) => {
+        console.log('Reloading websocket');
+        setTimeout(setupWebsocket, 100);
+      };
+    };
+
+    setupWebsocket();
+  }
+
   render() {
+    if(this.props.loading) {
+      return <div> Loading </div>;
+    }
+
     return <div>
       <Deck id='planet' />
       <CardArea id='planet' />
@@ -159,6 +223,7 @@ const BoardGameTest = gameConnect((state, dispatch, props) => {
   }
 });
 const stateStore=createStore(reducer, applyMiddleware(thunkMiddleware));
+stateStore.dispatch(getGameState());
 
 ReactDom.render(<Provider store={stateStore}>
   <BoardGameTest />

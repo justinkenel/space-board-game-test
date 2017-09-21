@@ -107,12 +107,12 @@ function handleAction(action) {
 
 app.ws('/communication', function(webSocket, request) {
   webSocket.on('message', function(serializedMessage) {
-    console.log("Handling: " + serializedMessage);
     const action = JSON.parse(serializedMessage);
-    staet=handleAction(action);
+    state=handleAction(action);
 
     expressWs.getWss().clients.forEach(function(client) {
       client.send('reload-state');
+      console.log('sent');
     });
     console.log("Broadcast Message");
   });
