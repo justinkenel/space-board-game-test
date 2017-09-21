@@ -15,10 +15,17 @@
   ],
   "planets": [
     {
-      "title": "Algoran Prime"
+      "title": "Algoran Prime",
+      "ability": [
+        "2 Tech I Ship"
+      ]
     },
     {
-      "title": "Tachikun III"
+      "title": "Tachikun III",
+      "ability": [
+        "1 Tech II Ship",
+        "+1 Military power when attacking"
+      ]
     },
     {
       "title": "Wren's Haven"

@@ -86,7 +86,13 @@ class Card extends React.Component {
   render() {
     return (<div className='card'>
       <div className='card-title'>{this.props.card.title}</div>
-    </div>);
+      {(this.props.card.ability||[]).length ?
+        <div className='card-abilities'>
+          <ul>
+            {this.props.card.ability.map(x=><li>{x}</li>)}
+          </ul>
+        </div> : null}
+      </div>);
   }
 };
 
