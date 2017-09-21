@@ -18,16 +18,42 @@
       "title": "Qadrath Trade Guild",
       "ability": [
         "+5 power to 1 economic action"
+      ],
+      "objective": [
+
       ]
     }
+  ],
+  "ships": [
+    {
+      "title": "Alnovan Frigate",
+      "tier": 1,
+      "military_power": 2
+    },
+    {
+      "title": "Qadrathi Trade Barge",
+      "tier": 1,
+      "ability": [
+        "+1 power when countering an opponents trade mission"
+      ],
+      "economic_power": 2
+    }
+  ],
+  "agents": [
   ],
   "planets": [
     {
      "title": "Alnova Prime",
      "ability": [
-        "1 level 2 ship",
         "+1 to military actions"
-      ]
+      ],
+      "objective": [
+        "Deploy a fleet of size 4"
+      ],
+      "objective_bonus": [
+         "1 level 2 ship"
+       ],
+      "military_power": 4
     },
     {
       "title": "Algoran Prime",

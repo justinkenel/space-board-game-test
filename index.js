@@ -12,20 +12,50 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: false, save
 
 const cardDefinitions=require('./cards.json');
 let id=0;
+
+const ships=Object.assign([], cardDefinitions.ships)
+  .map(x=>Object.assign({}, x, {id:id++, card_type: 'faction'}));
+
 let state={
   decks: {
     planet: {
       title: 'Planet Deck',
-      cards: Object.assign([], cardDefinitions.planets).map(x=>Object.assign({}, x, {id:id++})),
+      cards: Object.assign([], cardDefinitions.planets)
+        .map(x=>Object.assign({}, x, {id:id++, card_type: 'planet'})),
       discard: []
     },
     factions: {
       title: 'Faction Deck',
-      cards: Object.assign([], cardDefinitions.factions).map(x=>Object.assign({}, x, {id:id++})),
+      cards: Object.assign([], cardDefinitions.factions)
+        .map(x=>Object.assign({}, x, {id:id++, card_type: 'faction'})),
+      discard: []
+    },
+    assets_1: {
+      title: 'Assets I Deck',
+      cards: ships.filter(x=>x.tier==1),
+      discard: []
+    },
+    'player-one': {
+      title: 'Player One',
+      cards: [],
+      discard: []
+    },
+    'player-two': {
+      title: 'Player Two',
+      cards: [],
+      discard: []
+    },
+    'player-three': {
+      title: 'Player Three',
+      cards: [],
       discard: []
     }
   },
   cardAreas: {
+    assets_1: {
+      title: 'Assets I',
+      cards: []
+    },
     planet: {
       title: 'Unaffiliated Planets',
       cards: []
@@ -36,6 +66,26 @@ let state={
     },
     'player-one': {
       title: 'Player One',
+      cards: []
+    },
+    'player-two': {
+      title: 'Player Two',
+      cards: []
+    },
+    'player-three': {
+      title: 'Player Three',
+      cards: []
+    },
+    'player-one-active': {
+      title: 'Active Player One',
+      cards: []
+    },
+    'player-two-active': {
+      title: 'Active Player Two',
+      cards: []
+    },
+    'player-three-active': {
+      title: 'Active Player Three',
       cards: []
     }
   }

@@ -159,6 +159,27 @@ const Deck = gameConnect((state, dispatch, props) => {
   }
 });
 
+const DeckAndCardArea = gameConnect((state, dispatch, props) => {
+}, class extends React.Component {
+  render() {
+    return <div className="deck-and-card-area">
+      <Deck id={this.props.id} />
+      <CardArea id={this.props.id} />
+    </div>;
+  }
+});
+
+const PlayerArea = gameConnect((state, dispatch, props) => {
+}, class extends React.Component {
+  render() {
+    return <div className="deck-and-card-area">
+      <Deck id={this.props.id} />
+      <CardArea id={this.props.id} />
+      <CardArea id={this.props.id+'-active'} />
+    </div>;
+  }
+});
+
 function getGameState() {
   return dispatch => {
     console.log('getting game state')
@@ -222,11 +243,12 @@ const BoardGameTest = gameConnect((state, dispatch, props) => {
     }
 
     return <div>
-      <Deck id='planet' />
-      <CardArea id='planet' />
-      <Deck id='factions' />
-      <CardArea id='factions' />
-      <CardArea id='player-one' />
+      <DeckAndCardArea id='assets_1' />
+      <DeckAndCardArea id='planet' />
+      <DeckAndCardArea id='factions' />
+      <PlayerArea id='player-one' />
+      <PlayerArea id='player-two' />
+      <PlayerArea id='player-three' />
     </div>;
   }
 });
