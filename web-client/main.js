@@ -224,6 +224,8 @@ const BoardGameTest = gameConnect((state, dispatch, props) => {
     return <div>
       <Deck id='planet' />
       <CardArea id='planet' />
+      <Deck id='factions' />
+      <CardArea id='factions' />
       <CardArea id='player-one' />
     </div>;
   }

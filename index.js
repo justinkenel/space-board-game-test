@@ -18,11 +18,20 @@ let state={
       title: 'Planet Deck',
       cards: Object.assign([], cardDefinitions.planets).map(x=>Object.assign({}, x, {id:id++})),
       discard: []
+    },
+    factions: {
+      title: 'Faction Deck',
+      cards: Object.assign([], cardDefinitions.factions).map(x=>Object.assign({}, x, {id:id++})),
+      discard: []
     }
   },
   cardAreas: {
     planet: {
       title: 'Unaffiliated Planets',
+      cards: []
+    },
+    factions: {
+      title: 'Unaffiliated Factions',
       cards: []
     },
     'player-one': {

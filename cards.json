@@ -13,7 +13,22 @@
       "title": "House Ulrik of the Holy Sigil"
     }
   ],
+  "factions": [
+    {
+      "title": "Qadrath Trade Guild",
+      "ability": [
+        "+5 power to 1 economic action"
+      ]
+    }
+  ],
   "planets": [
+    {
+     "title": "Alnova Prime",
+     "ability": [
+        "1 level 2 ship",
+        "+1 to military actions"
+      ]
+    },
     {
       "title": "Algoran Prime",
       "ability": [
